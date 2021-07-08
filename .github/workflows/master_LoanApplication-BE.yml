@@ -48,6 +48,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'LoanApplication-BE'
-        slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_265facf0d4a84116a9ab730b55fee389 }}
         package: '*.jar'
