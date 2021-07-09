@@ -1,9 +1,11 @@
 package nl.testautomation.demoapplication.backend;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.model.LoanReason;
 import nl.testautomation.demoapplication.backend.repository.LoanReasonsRepository;
+import nl.testautomation.demoapplication.backend.repository.LoanRequestRepository;
 import nl.testautomation.demoapplication.backend.repository.LoanTypeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +21,7 @@ public class DemoapplicationApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(LoanTypeRepository loanTypeRepository, LoanReasonsRepository loanReasonsRepository) {
+	CommandLineRunner init(LoanTypeRepository loanTypeRepository, LoanReasonsRepository loanReasonsRepository, LoanRequestRepository loanRequestRepository) {
 		return args -> {
 			loanTypeRepository.save(new LoanType()
 					.setTitle("Mini-loan")
@@ -66,6 +68,13 @@ public class DemoapplicationApplication {
 					new LoanReason()
 							.setTitle("House")
 							.setDescription("You need a mortgage.")
+			);
+
+			loanRequestRepository.save(
+					new LoanRequest()
+						.setFirstName("T.")
+						.setLastName("Test")
+						.setAmount(5000)
 			);
 		};
 	}
