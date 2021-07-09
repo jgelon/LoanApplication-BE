@@ -7,21 +7,25 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="lenders")
+@Table(name="loanrequests")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lender {
+public class LoanRequest {
 
     @Id
     @GeneratedValue
     private int id;
     private String firstName;
     private String lastName;
+    private String address;
+    private String zipcode;
+    private String city;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_id", referencedColumnName = "id")
-    private Loan loan;
+    private LoanType loanType;
 
     private int amount;
 }

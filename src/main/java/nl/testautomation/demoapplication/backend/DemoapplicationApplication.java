@@ -1,10 +1,10 @@
 package nl.testautomation.demoapplication.backend;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.testautomation.demoapplication.backend.model.Loan;
+import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.model.LoanReason;
 import nl.testautomation.demoapplication.backend.repository.LoanReasonsRepository;
-import nl.testautomation.demoapplication.backend.repository.LoanRepository;
+import nl.testautomation.demoapplication.backend.repository.LoanTypeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,21 +19,21 @@ public class DemoapplicationApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(LoanRepository loanRepository, LoanReasonsRepository loanReasonsRepository) {
+	CommandLineRunner init(LoanTypeRepository loanTypeRepository, LoanReasonsRepository loanReasonsRepository) {
 		return args -> {
-			loanRepository.save(new Loan()
+			loanTypeRepository.save(new LoanType()
 					.setTitle("Mini-loan")
 					.setMinAmount(300));
-			loanRepository.save(new Loan()
+			loanTypeRepository.save(new LoanType()
 					.setTitle("Personal loan")
 					.setMinAmount(1500));
-			loanRepository.save(new Loan()
+			loanTypeRepository.save(new LoanType()
 					.setTitle("Revolving credit")
 					.setMinAmount(2500));
-			loanRepository.save(new Loan()
+			loanTypeRepository.save(new LoanType()
 					.setTitle("Car-loan")
 					.setMinAmount(2000));
-			loanRepository.save(new Loan()
+			loanTypeRepository.save(new LoanType()
 					.setTitle("Mortgage")
 					.setMinAmount(50000));
 

@@ -9,10 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="loans")
+@Table(name="loantypes")
 @Data
 @RequiredArgsConstructor
-public class Loan {
+public class LoanType {
 
     @Id
     @GeneratedValue
