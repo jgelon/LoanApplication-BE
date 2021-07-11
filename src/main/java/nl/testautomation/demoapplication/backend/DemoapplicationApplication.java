@@ -26,7 +26,6 @@ public class DemoapplicationApplication {
 		return args -> {
 			demoGeneratorService.generateDefaultLoanTypes();
 			demoGeneratorService.generateDefaultLoanReasons();
-			demoGeneratorService.generateLoanRequests(5);
 		};
 	}
 
