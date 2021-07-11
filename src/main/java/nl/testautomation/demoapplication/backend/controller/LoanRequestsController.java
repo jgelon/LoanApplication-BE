@@ -36,4 +36,10 @@ public class LoanRequestsController {
     public List<LoanRequest> generate() {
         return demoGeneratorService.generateLoanRequests(5);
     }
+
+    @GetMapping("/empty")
+    public String empty() {
+        loanRequestService.clearLoanRequests();
+        return "Cleared all requestors";
+    }
 }

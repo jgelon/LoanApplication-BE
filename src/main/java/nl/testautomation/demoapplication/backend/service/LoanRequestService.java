@@ -25,4 +25,8 @@ public class LoanRequestService {
 
         return loanRequestRepository.save(loanRequestDto.toLoanRequest());
     }
+
+    public void clearLoanRequests() {
+        loanRequestRepository.deleteAll();
+    }
 }
