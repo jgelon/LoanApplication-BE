@@ -3,12 +3,12 @@ package nl.testautomation.demoapplication.backend.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.Date;
 import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="loanrequests")
