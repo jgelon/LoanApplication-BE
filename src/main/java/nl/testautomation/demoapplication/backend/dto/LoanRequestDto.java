@@ -1,8 +1,10 @@
 package nl.testautomation.demoapplication.backend.dto;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import nl.testautomation.demoapplication.backend.enums.Gender;
+import nl.testautomation.demoapplication.backend.enums.IncomeType;
+import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.model.LoanType;
 
@@ -11,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class LoanRequestDto {
-    private String gender;
+    private Gender gender;
     private String firstName;
     private String lastName;
     private String address;
@@ -19,8 +21,8 @@ public class LoanRequestDto {
     private String city;
     private Date dob;
     private int income;
-    private String incomeType;
-    private String maritialStatus;
+    private IncomeType incomeType;
+    private MaritalStatus maritalStatus;
 
     private LoanType loanType;
 
@@ -37,7 +39,7 @@ public class LoanRequestDto {
                 .setDob(dob)
                 .setIncome(income)
                 .setIncomeType(incomeType)
-                .setMaritialStatus(maritialStatus)
+                .setMaritalStatus(maritalStatus)
                 .setLoanType(loanType)
                 .setAmount(amount);
     }

@@ -1,11 +1,15 @@
 package nl.testautomation.demoapplication.backend.controller;
 
+import java.util.Optional;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.service.DemoGeneratorService;
 import nl.testautomation.demoapplication.backend.service.LoanRequestService;
 import nl.testautomation.demoapplication.backend.service.LoanTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +31,18 @@ public class LoanRequestsController {
         return loanRequestService.getAllLoanRequests();
     }
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<LoanRequest> getLoanRequests(@PathVariable Integer id) {
+        Optional<LoanRequest> loanRequest = loanRequestService.getLoanRequest(id);
+        return ResponseEntity.of(loanRequest);
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<String> deleteLoanRequests(@PathVariable Integer id) {
+        loanRequestService.deleteLoanRequest(id);
+        return ResponseEntity.ok().body("");
+    }
+
     @PostMapping("/new")
     public LoanRequest addNewRequest(@RequestBody LoanRequestDto loanRequestDto) {
         return loanRequestService.addNewRequest(loanRequestDto);
@@ -37,9 +53,9 @@ public class LoanRequestsController {
         return demoGeneratorService.generateLoanRequests(5);
     }
 
-    @GetMapping("/empty")
-    public String empty() {
+    @PostMapping("/clear")
+    public ResponseEntity<String> clearAll() {
         loanRequestService.clearLoanRequests();
-        return "Cleared all requestors";
+        return ResponseEntity.ok().body("Cleared all requestors");
     }
 }

@@ -1,6 +1,10 @@
 package nl.testautomation.demoapplication.backend.service;
 
 import com.github.javafaker.Faker;
+import java.security.SecureRandom;
+import nl.testautomation.demoapplication.backend.enums.Gender;
+import nl.testautomation.demoapplication.backend.enums.IncomeType;
+import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
 import nl.testautomation.demoapplication.backend.model.LoanReason;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.model.LoanType;
@@ -12,10 +16,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class DemoGeneratorService {
+
+    private static final SecureRandom random = new SecureRandom();
 
     @Autowired
     LoanTypeRepository loanTypeRepository;
@@ -81,13 +86,12 @@ public class DemoGeneratorService {
     public List<LoanRequest> generateLoanRequests(int amount) {
         Faker faker = new Faker();
         List<LoanType> allLoanTypes = loanTypeService.getAllLoanTypes();
-        Random rand = new Random();
         List<LoanRequest> loanRequests = new ArrayList<>();
         for(int i = 0; i<amount; i++) {
-            LoanType loanType = allLoanTypes.get(rand.nextInt(allLoanTypes.size()));
+            LoanType loanType = allLoanTypes.get(random.nextInt(allLoanTypes.size()));
 
             LoanRequest loanRequest = new LoanRequest()
-                    .setGender("")
+                    .setGender(randomEnum(Gender.class))
                     .setFirstName(faker.name().firstName())
                     .setLastName(faker.name().lastName())
                     .setAddress(faker.address().streetAddress())
@@ -95,8 +99,8 @@ public class DemoGeneratorService {
                     .setCity(faker.address().city())
                     .setDob(faker.date().birthday(18, 85))
                     .setIncome(faker.number().numberBetween(25000, 250000))
-                    .setIncomeType("")
-                    .setMaritialStatus("")
+                    .setIncomeType(randomEnum(IncomeType.class))
+                    .setMaritalStatus(randomEnum(MaritalStatus.class))
                     .setLoanType(loanType)
                     .setAmount(faker.number().numberBetween(loanType.getMinAmount(), loanType.getMinAmount() * 10));
 
@@ -104,5 +108,10 @@ public class DemoGeneratorService {
         }
 
         return loanRequests;
+    }
+
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+        int x = random.nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
     }
 }

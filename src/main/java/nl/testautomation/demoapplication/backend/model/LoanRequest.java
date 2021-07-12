@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import nl.testautomation.demoapplication.backend.enums.Gender;
+import nl.testautomation.demoapplication.backend.enums.IncomeType;
+import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
 
 @Entity
 @Table(name="loanrequests")
@@ -17,7 +20,7 @@ public class LoanRequest {
     @Id
     @GeneratedValue
     private int id;
-    private String gender;
+    private Gender gender;
     private String firstName;
     private String lastName;
     private String address;
@@ -25,8 +28,8 @@ public class LoanRequest {
     private String city;
     private Date dob;
     private int income;
-    private String incomeType;
-    private String maritialStatus;
+    private IncomeType incomeType;
+    private MaritalStatus maritalStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_id", referencedColumnName = "id")

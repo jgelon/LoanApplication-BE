@@ -1,5 +1,6 @@
 package nl.testautomation.demoapplication.backend.service;
 
+import java.util.Optional;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.repository.LoanRequestRepository;
@@ -13,7 +14,7 @@ import java.util.List;
 public class LoanRequestService {
 
     @Autowired
-    LoanRequestRepository loanRequestRepository;
+    private LoanRequestRepository loanRequestRepository;
 
     public List<LoanRequest> getAllLoanRequests() {
         List<LoanRequest> loanRequests = new ArrayList<>();
@@ -22,11 +23,18 @@ public class LoanRequestService {
     }
 
     public LoanRequest addNewRequest(LoanRequestDto loanRequestDto) {
-
         return loanRequestRepository.save(loanRequestDto.toLoanRequest());
     }
 
     public void clearLoanRequests() {
         loanRequestRepository.deleteAll();
+    }
+
+    public Optional<LoanRequest> getLoanRequest(Integer id) {
+        return loanRequestRepository.findById(id);
+    }
+
+    public void deleteLoanRequest(Integer id) {
+        loanRequestRepository.deleteById(id);
     }
 }
