@@ -27,6 +27,11 @@ public class CommentController {
         return commentService.save(requestId, commentText);
     }
 
+    @GetMapping("/comment/{commentId}")
+    public ResponseEntity<Comment> getComment(@PathVariable Integer commentId) {
+        return ResponseEntity.of(commentService.getSingleComment(commentId));
+    }
+
     @PutMapping("/comment/{commentId}")
     public ResponseEntity<Comment> deleteComment(@PathVariable Integer commentId, @RequestBody String commentText) {
         Optional<Comment> update = commentService.update(commentId, commentText);

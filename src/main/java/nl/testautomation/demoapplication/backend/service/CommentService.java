@@ -21,15 +21,16 @@ public class CommentService {
         return commentRepository.save(new Comment().setRequestId(requestId).setText(text));
     }
 
+    public Optional<Comment> getSingleComment(Integer commentId) {
+        return commentRepository.findById(commentId);
+    }
+
     public void delete(int id) {
         commentRepository.deleteById(id);
     }
 
     public Optional<Comment> update(int commentId, String commentText) {
         Optional<Comment> existingComment = commentRepository.findById(commentId);
-        if (existingComment.isPresent()) {
-            return Optional.of(commentRepository.save(existingComment.get().setText(commentText)));
-        }
-        return Optional.empty();
+        return existingComment.map(comment -> commentRepository.save(comment.setText(commentText)));
     }
 }
