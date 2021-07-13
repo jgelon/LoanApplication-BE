@@ -1,7 +1,6 @@
 package nl.testautomation.demoapplication.backend.service;
 
 import com.github.javafaker.Faker;
-import java.security.SecureRandom;
 import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
@@ -14,13 +13,16 @@ import nl.testautomation.demoapplication.backend.repository.LoanTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class DemoGeneratorService {
 
     private static final SecureRandom random = new SecureRandom();
+    private final Faker faker = new Faker(new Locale("nl"));
 
     @Autowired
     LoanTypeRepository loanTypeRepository;
@@ -84,7 +86,6 @@ public class DemoGeneratorService {
     }
 
     public List<LoanRequest> generateLoanRequests(int amount) {
-        Faker faker = new Faker();
         List<LoanType> allLoanTypes = loanTypeService.getAllLoanTypes();
         List<LoanRequest> loanRequests = new ArrayList<>();
         for(int i = 0; i<amount; i++) {
