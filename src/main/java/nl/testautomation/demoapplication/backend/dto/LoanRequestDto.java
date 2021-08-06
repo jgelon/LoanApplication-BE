@@ -24,7 +24,7 @@ public class LoanRequestDto {
     private IncomeType incomeType;
     private MaritalStatus maritalStatus;
 
-    private LoanType loanType;
+    private int loanTypeId;
 
     private int amount;
 
@@ -40,7 +40,6 @@ public class LoanRequestDto {
                 .setIncome(income)
                 .setIncomeType(incomeType)
                 .setMaritalStatus(maritalStatus)
-                .setLoanType(loanType)
                 .setAmount(amount);
     }
 }

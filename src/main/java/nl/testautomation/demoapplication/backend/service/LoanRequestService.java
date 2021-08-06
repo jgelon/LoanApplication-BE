@@ -15,6 +15,8 @@ public class LoanRequestService {
 
     @Autowired
     private LoanRequestRepository loanRequestRepository;
+    @Autowired
+    private LoanTypeService loanTypeService;
 
     public List<LoanRequest> getAllLoanRequests() {
         List<LoanRequest> loanRequests = new ArrayList<>();
@@ -23,7 +25,9 @@ public class LoanRequestService {
     }
 
     public LoanRequest addNewRequest(LoanRequestDto loanRequestDto) {
-        return loanRequestRepository.save(loanRequestDto.toLoanRequest());
+        LoanRequest loanRequest = loanRequestDto.toLoanRequest();
+        loanRequest.setLoanType(loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()));
+        return loanRequestRepository.save(loanRequest);
     }
 
     public void clearLoanRequests() {
