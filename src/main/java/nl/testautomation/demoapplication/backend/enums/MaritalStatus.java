@@ -1,6 +1,7 @@
 package nl.testautomation.demoapplication.backend.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Locale;
 
 public enum MaritalStatus {
@@ -10,7 +11,7 @@ public enum MaritalStatus {
     LIVING_TOGETHER;
 
     @JsonCreator
-    public static Gender fromString(String value) {
-        return Gender.valueOf(value.replace(" ", "_").toUpperCase(Locale.ROOT));
+    public static MaritalStatus fromString(String value) {
+        return MaritalStatus.valueOf(value.replace(" ", "_").toUpperCase(Locale.ROOT));
     }
 }

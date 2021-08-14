@@ -6,7 +6,6 @@ import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
-import nl.testautomation.demoapplication.backend.model.LoanType;
 
 import java.util.Date;
 
