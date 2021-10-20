@@ -16,6 +16,10 @@ frontend/bower_components/
 # IDEs and editors
 .idea/
 *.iml
+.project
+.factorypath
+.classpath
+.settings/
 
 # misc
 .sass-cache/
