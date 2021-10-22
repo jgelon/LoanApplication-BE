@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/${endpoints.loanreasons}")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class LoanReasonController {
     @Autowired
     LoanReasonsService loanReasonsService;
