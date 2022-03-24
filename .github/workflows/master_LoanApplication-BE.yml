@@ -21,9 +21,12 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '11'
-
+   
     - name: Build with Maven
-      run: mvn clean install
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jgelon_LoanApplication-BE
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
