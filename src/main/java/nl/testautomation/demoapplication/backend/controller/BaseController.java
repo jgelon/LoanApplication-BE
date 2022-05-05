@@ -1,6 +1,6 @@
 package nl.testautomation.demoapplication.backend.controller;
 
-import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class BaseController {
      * @return Return OK or FORBIDDEN if authorization header is provided.
      */
     @PostMapping("/secure")
-    @ApiImplicitParam(name = "Authorization", value = "Access Token", paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
+    @Parameter(name = "Authorization", description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<String> secure(@RequestHeader(value = "Authorization", defaultValue = "") String authorization) {
 
         if(StringUtils.isEmpty(authorization)) {
