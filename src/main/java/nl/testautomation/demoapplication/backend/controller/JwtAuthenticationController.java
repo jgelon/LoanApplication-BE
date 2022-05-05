@@ -1,7 +1,5 @@
 package nl.testautomation.demoapplication.backend.controller;
 
-import java.util.Objects;
-
 import nl.testautomation.demoapplication.backend.config.JwtTokenUtil;
 import nl.testautomation.demoapplication.backend.dto.JwtRequestDto;
 import nl.testautomation.demoapplication.backend.dto.JwtResponseDto;
