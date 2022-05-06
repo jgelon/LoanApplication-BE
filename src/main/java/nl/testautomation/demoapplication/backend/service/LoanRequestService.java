@@ -4,6 +4,7 @@ import java.util.Optional;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
+import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.repository.LoanRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,11 @@ public class LoanRequestService {
     }
 
     public LoanRequest addNewRequest(LoanRequestDto loanRequestDto) {
+        LoanType loanType = loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()).orElseThrow();
+
         LoanRequest loanRequest = loanRequestDto.toLoanRequest();
         loanRequest.setDecision(Decision.OPEN);
-        loanRequest.setLoanType(loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()));
+        loanRequest.setLoanType(loanType);
         return loanRequestRepository.save(loanRequest);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LoanTypeService {
@@ -19,8 +20,8 @@ public class LoanTypeService {
         return loanTypes;
     }
 
-    public LoanType getLoanTypeById(int id) {
-        return loanTypeRepository.findById(id).get();
+    public Optional<LoanType> getLoanTypeById(int id) {
+        return loanTypeRepository.findById(id);
     }
 
     public void saveOrUpdate(LoanType type) {

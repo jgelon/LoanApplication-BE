@@ -22,12 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
-    private UserDetailsService jwtUserDetailsService;
-    @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailsService jwtUserDetailsService) {
         var provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(jwtUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());

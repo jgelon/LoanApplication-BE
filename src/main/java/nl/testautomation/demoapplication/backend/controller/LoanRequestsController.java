@@ -42,7 +42,7 @@ public class LoanRequestsController {
     }    
 
     @PostMapping("/approve/{id}")
-    public ResponseEntity<LoanRequest> approve(@PathVariable Integer id) {        ;
+    public ResponseEntity<LoanRequest> approve(@PathVariable Integer id) {
         return ResponseEntity.of(loanRequestService.approveLoanRequest(id));
     }    
 

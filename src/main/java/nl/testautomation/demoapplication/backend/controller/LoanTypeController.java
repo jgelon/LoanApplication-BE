@@ -3,6 +3,7 @@ package nl.testautomation.demoapplication.backend.controller;
 import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.service.LoanTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,15 +21,8 @@ public class LoanTypeController {
     }
 
     @GetMapping("/{id}")
-    public LoanType getLoan(@PathVariable("id") int id) {
-        return loanTypeService.getLoanTypeById(id);
+    public ResponseEntity<LoanType> getLoan(@PathVariable("id") int id) {
+        return ResponseEntity.of(loanTypeService.getLoanTypeById(id));
     }
-
-//    @DeleteMapping("/{id}")
-//    private void deleteLoan(@PathVariable("id") int id) {
-//        loanService.delete(id);
-//    }
-
-
 
 }
