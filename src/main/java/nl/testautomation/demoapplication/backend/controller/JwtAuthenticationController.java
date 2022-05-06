@@ -31,7 +31,7 @@ public class JwtAuthenticationController {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponseDto(token));
+        return ResponseEntity.ok(new JwtResponseDto(token, userDetails));
     }
 
     private void authenticate(String username, String password) throws DisabledException, BadCredentialsException {

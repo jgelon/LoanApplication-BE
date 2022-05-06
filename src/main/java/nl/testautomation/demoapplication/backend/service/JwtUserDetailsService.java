@@ -1,7 +1,9 @@
 package nl.testautomation.demoapplication.backend.service;
 
-import java.util.ArrayList;
-import org.springframework.security.core.userdetails.User;
+import nl.testautomation.demoapplication.backend.config.MyUserPrincipal;
+import nl.testautomation.demoapplication.backend.model.User;
+import nl.testautomation.demoapplication.backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,20 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    /**
-     *
-     * @param username = admin (password = admin)
-     * @return
-     * @throws UsernameNotFoundException
-     */
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("admin".equals(username)) {
-            return new User("admin", "$2a$10$3Fxu6pvGkYODXwQwz2pEh.gXKL0zrA5cEr5LuFkzjDBh5zUC/T41.",
-                    new ArrayList<>());
-        } else {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
         }
+        return new MyUserPrincipal(user);
     }
 
 }

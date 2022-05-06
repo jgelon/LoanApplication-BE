@@ -42,6 +42,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException e) {
                 log.debug("JWT Token has expired");
             }
+        } else if(request.getRequestURI().contains("config")) {
+            logger.debug("Config URI");
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
         }

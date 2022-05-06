@@ -1,10 +1,24 @@
 package nl.testautomation.demoapplication.backend.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@AllArgsConstructor
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+@Value
 public class JwtResponseDto {
-    @Getter
-    private String jwttoken;
+    String token;
+    String type = "Bearer";
+    Collection<String> authorities;
+    String username;
+
+    public JwtResponseDto(String jwtToken, UserDetails userDetails) {
+        token = jwtToken;
+        username = userDetails.getUsername();
+        authorities = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+    }
 }
