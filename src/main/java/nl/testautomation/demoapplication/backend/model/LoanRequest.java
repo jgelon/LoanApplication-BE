@@ -3,6 +3,7 @@ package nl.testautomation.demoapplication.backend.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
@@ -36,4 +37,6 @@ public class LoanRequest {
     private LoanType loanType;
 
     private int amount;
+
+    private Decision decision;
 }

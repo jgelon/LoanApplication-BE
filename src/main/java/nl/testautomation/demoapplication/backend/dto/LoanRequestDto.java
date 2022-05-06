@@ -2,6 +2,7 @@ package nl.testautomation.demoapplication.backend.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
@@ -26,7 +27,7 @@ public class LoanRequestDto {
     private int loanTypeId;
 
     private int amount;
-
+    
     public LoanRequest toLoanRequest() {
         return new LoanRequest()
                 .setGender(gender)

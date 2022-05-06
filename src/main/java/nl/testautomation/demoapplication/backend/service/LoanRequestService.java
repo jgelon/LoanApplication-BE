@@ -2,6 +2,7 @@ package nl.testautomation.demoapplication.backend.service;
 
 import java.util.Optional;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
+import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.repository.LoanRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class LoanRequestService {
 
     public LoanRequest addNewRequest(LoanRequestDto loanRequestDto) {
         LoanRequest loanRequest = loanRequestDto.toLoanRequest();
+        loanRequest.setDecision(Decision.OPEN);
         loanRequest.setLoanType(loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()));
         return loanRequestRepository.save(loanRequest);
     }
@@ -40,5 +42,25 @@ public class LoanRequestService {
 
     public void deleteLoanRequest(Integer id) {
         loanRequestRepository.deleteById(id);
+    }
+
+    public Optional<LoanRequest> approveLoanRequest(Integer id) {
+        Optional<LoanRequest> requestOptional = getLoanRequest(id);
+        if(requestOptional.isPresent()){
+            LoanRequest request = requestOptional.get();
+            request.setDecision(Decision.APPROVED);
+            return Optional.of(loanRequestRepository.save(request));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<LoanRequest> declineLoanRequest(Integer id) {
+        Optional<LoanRequest> requestOptional = getLoanRequest(id);
+        if(requestOptional.isPresent()){
+            LoanRequest request = requestOptional.get();
+            request.setDecision(Decision.DECLINED);
+            return Optional.of(loanRequestRepository.save(request));
+        }
+        return Optional.empty();
     }
 }

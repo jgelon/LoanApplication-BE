@@ -39,6 +39,16 @@ public class LoanRequestsController {
     public ResponseEntity<String> deleteLoanRequests(@PathVariable Integer id) {
         loanRequestService.deleteLoanRequest(id);
         return ResponseEntity.ok().body("");
+    }    
+
+    @PostMapping("/approve/{id}")
+    public ResponseEntity<LoanRequest> approve(@PathVariable Integer id) {        ;
+        return ResponseEntity.of(loanRequestService.approveLoanRequest(id));
+    }    
+
+    @PostMapping("/decline/{id}")
+    public ResponseEntity<LoanRequest> decline(@PathVariable Integer id) {
+        return ResponseEntity.of(loanRequestService.declineLoanRequest(id));
     }
 
     @PostMapping("/new")
