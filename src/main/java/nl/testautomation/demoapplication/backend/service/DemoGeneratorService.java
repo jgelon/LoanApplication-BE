@@ -1,6 +1,8 @@
 package nl.testautomation.demoapplication.backend.service;
 
 import com.github.javafaker.Faker;
+
+import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
@@ -103,7 +105,8 @@ public class DemoGeneratorService {
                     .setIncomeType(randomEnum(IncomeType.class))
                     .setMaritalStatus(randomEnum(MaritalStatus.class))
                     .setLoanType(loanType)
-                    .setAmount(faker.number().numberBetween(loanType.getMinAmount(), loanType.getMinAmount() * 10));
+                    .setAmount(faker.number().numberBetween(loanType.getMinAmount(), loanType.getMinAmount() * 10))
+                    .setDecision(Decision.OPEN);
 
             loanRequests.add(loanRequestRepository.save(loanRequest));
         }
