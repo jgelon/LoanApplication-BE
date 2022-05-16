@@ -1,5 +1,6 @@
 package nl.testautomation.demoapplication.backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name="loantypes")
 @Data
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class LoanType {
 
     @Id

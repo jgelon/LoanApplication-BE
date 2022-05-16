@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class LoanTypeService {
-    LoanTypeRepository loanTypeRepository;
+    private LoanTypeRepository loanTypeRepository;
 
     public List<LoanType> getAllLoanTypes() {
         List<LoanType> loanTypes = new ArrayList<>();

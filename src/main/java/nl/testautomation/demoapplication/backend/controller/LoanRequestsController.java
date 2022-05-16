@@ -65,7 +65,7 @@ public class LoanRequestsController {
     }
 
     @PostMapping("/new")
-    public LoanRequest addNewRequest(@RequestBody LoanRequestDto loanRequestDto) {
+    public ResponseEntity<Object> addNewRequest(@RequestBody LoanRequestDto loanRequestDto) {
         return loanRequestService.addNewRequest(loanRequestDto);
     }
 

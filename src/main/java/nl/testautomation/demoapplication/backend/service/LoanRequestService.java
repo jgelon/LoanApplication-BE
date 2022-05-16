@@ -1,11 +1,13 @@
 package nl.testautomation.demoapplication.backend.service;
 
 import lombok.AllArgsConstructor;
+import nl.testautomation.demoapplication.backend.dto.ErrorDto;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.repository.LoanRequestRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,13 +27,17 @@ public class LoanRequestService {
         return loanRequests;
     }
 
-    public LoanRequest addNewRequest(LoanRequestDto loanRequestDto) {
+    public ResponseEntity<Object> addNewRequest(LoanRequestDto loanRequestDto) {
         LoanType loanType = loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()).orElseThrow();
+
+        if(loanType.getMinAmount() > loanRequestDto.getAmount()) {
+            return ResponseEntity.badRequest().body(new ErrorDto(601, "The requested amount is to low for this type of loan!"));
+        }
 
         LoanRequest loanRequest = loanRequestDto.toLoanRequest();
         loanRequest.setDecision(Decision.OPEN);
         loanRequest.setLoanType(loanType);
-        return loanRequestRepository.save(loanRequest);
+        return ResponseEntity.ok(loanRequestRepository.save(loanRequest));
     }
 
     public void clearLoanRequests() {
