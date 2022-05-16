@@ -1,23 +1,22 @@
 package nl.testautomation.demoapplication.backend.service;
 
-import java.util.Optional;
+import lombok.AllArgsConstructor;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
 import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.repository.LoanRequestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class LoanRequestService {
 
-    @Autowired
     private LoanRequestRepository loanRequestRepository;
-    @Autowired
     private LoanTypeService loanTypeService;
 
     public List<LoanRequest> getAllLoanRequests() {

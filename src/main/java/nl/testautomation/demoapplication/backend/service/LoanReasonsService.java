@@ -1,16 +1,17 @@
 package nl.testautomation.demoapplication.backend.service;
 
+import lombok.AllArgsConstructor;
 import nl.testautomation.demoapplication.backend.model.LoanReason;
 import nl.testautomation.demoapplication.backend.repository.LoanReasonsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class LoanReasonsService {
-    @Autowired
+
     LoanReasonsRepository loanReasonsRepository;
 
     public List<LoanReason> getAllReasons() {

@@ -1,8 +1,8 @@
 package nl.testautomation.demoapplication.backend.service;
 
+import lombok.AllArgsConstructor;
 import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.repository.LoanTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class LoanTypeService {
-    @Autowired
     LoanTypeRepository loanTypeRepository;
 
     public List<LoanType> getAllLoanTypes() {
