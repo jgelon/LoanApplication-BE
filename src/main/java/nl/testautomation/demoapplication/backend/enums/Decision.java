@@ -1,6 +1,7 @@
 package nl.testautomation.demoapplication.backend.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Locale;
 
 public enum Decision {
