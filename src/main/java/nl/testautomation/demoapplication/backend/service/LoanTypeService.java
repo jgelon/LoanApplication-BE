@@ -24,11 +24,11 @@ public class LoanTypeService {
         return loanTypeRepository.findById(id);
     }
 
-    public void saveOrUpdate(LoanType type) {
-        loanTypeRepository.save(type);
-    }
-
-    public void delete(int id) {
-        loanTypeRepository.deleteById(id);
-    }
+//    public void saveOrUpdate(LoanType type) {
+//        loanTypeRepository.save(type);
+//    }
+//
+//    public void delete(int id) {
+//        loanTypeRepository.deleteById(id);
+//    }
 }

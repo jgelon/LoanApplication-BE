@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -78,6 +78,22 @@ class LoanRequestServiceTest {
     }
 
     @Test
+    void approveNonExistingLoanRequest() {
+        when(loanRequestRepository.findById(1)).thenReturn(Optional.empty());
+
+        var response = loanRequestService.approveLoanRequest(1);
+        assertThat(response.isPresent(), is(false));
+    }
+
+    @Test
+    void declineNonExistingLoanRequest() {
+        when(loanRequestRepository.findById(1)).thenReturn(Optional.empty());
+
+        var response = loanRequestService.declineLoanRequest(1);
+        assertThat(response.isPresent(), is(false));
+    }
+
+    @Test
     void declineLoanRequest() {
         var loan = new LoanRequest().setId(1).setFirstName("Test").setDecision(Decision.OPEN);
         when(loanRequestRepository.findById(1)).thenReturn(Optional.of(loan));
@@ -85,5 +101,17 @@ class LoanRequestServiceTest {
         var response = loanRequestService.declineLoanRequest(1);
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getDecision(), is(Decision.DECLINED));
+    }
+
+    @Test
+    void getAll() {
+        var amount = 600;
+        var request = new LoanRequest().setAmount(amount);
+        var request2 = new LoanRequest().setAmount(2*amount);
+        when(loanRequestRepository.findAll()).thenReturn(List.of(new LoanRequest[]{request,request2}));;
+
+        var response = loanRequestService.getAllLoanRequests();
+        assertThat(response.size(), is(2));
+        assertThat(response.get(1).getAmount(), is(2*amount));
     }
 }

@@ -20,11 +20,11 @@ public class LoanReasonsService {
         return reasons;
     }
 
-    public void saveOrUpdate(LoanReason reason) {
-        loanReasonsRepository.save(reason);
-    }
-
-    public void delete(int id) {
-        loanReasonsRepository.deleteById(id);
-    }
+//    public void saveOrUpdate(LoanReason reason) {
+//        loanReasonsRepository.save(reason);
+//    }
+//
+//    public void delete(int id) {
+//        loanReasonsRepository.deleteById(id);
+//    }
 }
