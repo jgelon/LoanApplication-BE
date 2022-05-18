@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
-import nl.testautomation.demoapplication.backend.service.DemoGeneratorService;
+import nl.testautomation.demoapplication.backend.service.DataGeneratorService;
 import nl.testautomation.demoapplication.backend.service.LoanRequestService;
 import nl.testautomation.demoapplication.backend.service.LoanTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class LoanRequestsController {
     @Autowired
     LoanTypeService loanTypeService;
     @Autowired
-    DemoGeneratorService demoGeneratorService;
+    DataGeneratorService dataGeneratorService;
 
     @GetMapping("/")
     @PreAuthorize("hasAuthority('REQUEST_READ')")
@@ -65,13 +65,13 @@ public class LoanRequestsController {
     }
 
     @PostMapping("/new")
-    public LoanRequest addNewRequest(@RequestBody LoanRequestDto loanRequestDto) {
+    public ResponseEntity<Object> addNewRequest(@RequestBody LoanRequestDto loanRequestDto) {
         return loanRequestService.addNewRequest(loanRequestDto);
     }
 
     @GetMapping("/generate")
     public List<LoanRequest> generate() {
-        return demoGeneratorService.generateLoanRequests(1);
+        return dataGeneratorService.generateLoanRequests(1);
     }
 
     @PostMapping("/clear")

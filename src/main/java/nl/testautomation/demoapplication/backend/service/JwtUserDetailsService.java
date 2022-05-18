@@ -1,17 +1,17 @@
 package nl.testautomation.demoapplication.backend.service;
 
+import lombok.AllArgsConstructor;
 import nl.testautomation.demoapplication.backend.config.MyUserPrincipal;
 import nl.testautomation.demoapplication.backend.model.User;
 import nl.testautomation.demoapplication.backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 @Service
+@AllArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
 
     @Override

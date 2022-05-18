@@ -1,16 +1,17 @@
 package nl.testautomation.demoapplication.backend.service;
 
+import lombok.AllArgsConstructor;
 import nl.testautomation.demoapplication.backend.model.Comment;
 import nl.testautomation.demoapplication.backend.repository.CommentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CommentService {
-    @Autowired
+
     CommentRepository commentRepository;
 
     public List<Comment> getComments(int requestId){

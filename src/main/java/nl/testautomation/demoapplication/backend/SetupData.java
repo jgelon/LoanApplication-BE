@@ -1,7 +1,11 @@
 package nl.testautomation.demoapplication.backend;
 
+import nl.testautomation.demoapplication.backend.model.LoanReason;
+import nl.testautomation.demoapplication.backend.model.LoanType;
 import nl.testautomation.demoapplication.backend.model.Privilege;
 import nl.testautomation.demoapplication.backend.model.User;
+import nl.testautomation.demoapplication.backend.repository.LoanReasonsRepository;
+import nl.testautomation.demoapplication.backend.repository.LoanTypeRepository;
 import nl.testautomation.demoapplication.backend.repository.PrivilegeRepository;
 import nl.testautomation.demoapplication.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +29,20 @@ public class SetupData {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private LoanTypeRepository loanTypeRepository;
+
+    @Autowired
+    private LoanReasonsRepository loanReasonsRepository;
+
     private Iterable<Privilege> privileges;
 
     @PostConstruct
     public void init() {
         initPrivileges();
         initUsers();
+        generateDefaultLoanTypes();
+        generateDefaultLoanReasons();
     }
 
     private void initPrivileges() {
@@ -63,5 +75,56 @@ public class SetupData {
                 .setPassword(passwordEncoder.encode("reader"))
                 .setPrivileges(readPriv);
         userRepository.save(user2);
+    }
+
+    private void generateDefaultLoanTypes() {
+        loanTypeRepository.save(new LoanType()
+                .setTitle("Mini-loan")
+                .setMinAmount(300));
+        loanTypeRepository.save(new LoanType()
+                .setTitle("Personal loan")
+                .setMinAmount(1500));
+        loanTypeRepository.save(new LoanType()
+                .setTitle("Revolving credit")
+                .setMinAmount(2500));
+        loanTypeRepository.save(new LoanType()
+                .setTitle("Car-loan")
+                .setMinAmount(2000));
+        loanTypeRepository.save(new LoanType()
+                .setTitle("Mortgage")
+                .setMinAmount(50000));
+    }
+
+    public void generateDefaultLoanReasons() {
+        loanReasonsRepository.save(
+                new LoanReason()
+                        .setTitle("Groceries")
+                        .setDescription("It is not a good idea to apply for a loan for just groceries.")
+        );
+        loanReasonsRepository.save(
+                new LoanReason()
+                        .setTitle("Investments")
+                        .setDescription("Perhaps it is not such a good idea to apply for a loan for just investments.")
+        );
+        loanReasonsRepository.save(
+                new LoanReason()
+                        .setTitle("Bills")
+                        .setDescription("A Revolving Credit or a Personal loan is probably the way to go.")
+        );
+        loanReasonsRepository.save(
+                new LoanReason()
+                        .setTitle("Furniture")
+                        .setDescription("A mini-loan or a Personal loan is probably the best choice.")
+        );
+        loanReasonsRepository.save(
+                new LoanReason()
+                        .setTitle("Car")
+                        .setDescription("A Car-loan is the best choice when buying a car.")
+        );
+        loanReasonsRepository.save(
+                new LoanReason()
+                        .setTitle("House")
+                        .setDescription("You need a mortgage.")
+        );
     }
 }
