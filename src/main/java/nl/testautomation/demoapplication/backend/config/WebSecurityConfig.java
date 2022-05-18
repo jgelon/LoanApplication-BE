@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // We don't need CSRF for this example
         httpSecurity.cors().and().csrf().disable()
                 // Only authenticate comments everything else is permitted
-                .authorizeRequests().antMatchers("/comments/**", "/loanrequests/**").authenticated()
+                .authorizeRequests().antMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
                 .anyRequest().permitAll()
                 // make sure we use stateless session; session won't be used to
                 // store user's state.
