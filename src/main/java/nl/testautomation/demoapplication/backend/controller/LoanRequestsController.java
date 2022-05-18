@@ -75,7 +75,7 @@ public class LoanRequestsController {
     }
 
     @PostMapping("/clear")
-    @PreAuthorize("hasAuthority('REQUEST_DELETE')")
+    @PreAuthorize("hasAuthority('REQUEST_DELETE_ALL')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<String> clearAll() {
         loanRequestService.clearLoanRequests();

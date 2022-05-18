@@ -52,7 +52,8 @@ public class SetupData {
                 new Privilege("COMMENT_DELETE"),
                 new Privilege("REQUEST_READ"),
                 new Privilege("REQUEST_WRITE"),
-                new Privilege("REQUEST_DELETE")
+                new Privilege("REQUEST_DELETE"),
+                new Privilege("REQUEST_DELETE_ALL")
         ));
 
         privileges = privilegeRepository.saveAll(privilegesList);
@@ -62,12 +63,18 @@ public class SetupData {
         Set<Privilege> allPriv = new HashSet<>();
         privileges.forEach(allPriv::add);
 
+        User user0 = new User()
+                .setUsername("superadmin")
+                .setPassword(passwordEncoder.encode("superadmin"))
+                .setPrivileges(allPriv);
+        userRepository.save(user0);
+
+        Set<Privilege> adminPriv = allPriv.stream().filter(p -> !p.getName().contains("_ALL")).collect(Collectors.toSet());
         User user1 = new User()
                 .setUsername("admin")
                 .setPassword(passwordEncoder.encode("admin"))
-                .setPrivileges(allPriv);
+                .setPrivileges(adminPriv);
         userRepository.save(user1);
-
 
         Set<Privilege> readPriv = allPriv.stream().filter(p -> p.getName().contains("READ")).collect(Collectors.toSet());
         User user2 = new User()
