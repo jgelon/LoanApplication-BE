@@ -5,8 +5,6 @@ name: Build and deploy JAR app to Azure Web App - LoanApplication-BE
 
 on:
   push:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
@@ -36,6 +34,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     needs: build
     environment:
       name: 'production'
