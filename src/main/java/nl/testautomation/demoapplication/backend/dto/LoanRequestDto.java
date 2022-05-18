@@ -22,9 +22,7 @@ public class LoanRequestDto {
     private int income;
     private IncomeType incomeType;
     private MaritalStatus maritalStatus;
-
     private int loanTypeId;
-
     private int amount;
 
     public LoanRequest toLoanRequest() {

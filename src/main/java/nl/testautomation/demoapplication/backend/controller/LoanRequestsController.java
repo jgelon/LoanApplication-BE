@@ -43,7 +43,7 @@ public class LoanRequestsController {
     }
 
     @DeleteMapping("/admin/id/{id}")
-    @PreAuthorize("hasAuthority('REQUEST_READ')")
+    @PreAuthorize("hasAuthority('REQUEST_DELETE')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<String> deleteLoanRequests(@PathVariable Integer id) {
         loanRequestService.deleteLoanRequest(id);
