@@ -27,14 +27,14 @@ public class LoanRequestsController {
     @Autowired
     DataGeneratorService dataGeneratorService;
 
-    @GetMapping("/")
+    @GetMapping("/admin/")
     @PreAuthorize("hasAuthority('REQUEST_READ')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public List<LoanRequest> getAllLoanRequests() {
         return loanRequestService.getAllLoanRequests();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/admin/id/{id}")
     @PreAuthorize("hasAuthority('REQUEST_READ')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<LoanRequest> getLoanRequests(@PathVariable Integer id) {
@@ -42,7 +42,7 @@ public class LoanRequestsController {
         return ResponseEntity.of(loanRequest);
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/admin/id/{id}")
     @PreAuthorize("hasAuthority('REQUEST_READ')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<String> deleteLoanRequests(@PathVariable Integer id) {
@@ -50,14 +50,14 @@ public class LoanRequestsController {
         return ResponseEntity.ok().body("");
     }    
 
-    @PostMapping("/approve/{id}")
+    @PostMapping("/admin/approve/{id}")
     @PreAuthorize("hasAuthority('REQUEST_WRITE')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<LoanRequest> approve(@PathVariable Integer id) {
         return ResponseEntity.of(loanRequestService.approveLoanRequest(id));
     }    
 
-    @PostMapping("/decline/{id}")
+    @PostMapping("/admin/decline/{id}")
     @PreAuthorize("hasAuthority('REQUEST_WRITE')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<LoanRequest> decline(@PathVariable Integer id) {
@@ -74,7 +74,7 @@ public class LoanRequestsController {
         return dataGeneratorService.generateLoanRequests(1);
     }
 
-    @PostMapping("/clear")
+    @PostMapping("/admin/clear")
     @PreAuthorize("hasAuthority('REQUEST_DELETE_ALL')")
     @Parameter(name = "Authorization", in = ParameterIn.HEADER, description = "Access Token", required = true, example = "Bearer access_token")
     public ResponseEntity<String> clearAll() {
