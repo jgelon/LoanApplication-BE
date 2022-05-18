@@ -1,5 +1,6 @@
 package nl.testautomation.demoapplication.backend.service;
 
+import nl.testautomation.demoapplication.backend.dto.ErrorDto;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.enums.Decision;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
@@ -12,10 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -23,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class LoanRequestServiceTest {
 
     @Mock
@@ -35,15 +40,15 @@ class LoanRequestServiceTest {
 
     @BeforeEach
     void initUseCase() {
-        LoanType basicLoan = new LoanType(1, "Test", "Test", 500);
+        LoanType basicLoan = new LoanType(1, "Test Type", "Test Type", 500);
         when(loanTypeService.getLoanTypeById(1)).thenReturn(Optional.of(basicLoan));
+        when(loanRequestRepository.save(any(LoanRequest.class))).then(returnsFirstArg());
     }
 
     @Test
     void addNewRequestValid() {
         var amount = 600;
         var request = new LoanRequestDto().setLoanTypeId(1).setAmount(amount);
-        when(loanRequestRepository.save(any(LoanRequest.class))).then(returnsFirstArg());
 
         var response = loanRequestService.addNewRequest(request);
         var body = (LoanRequest)response.getBody();
@@ -57,11 +62,14 @@ class LoanRequestServiceTest {
 
         var response = loanRequestService.addNewRequest(request);
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+        var responseBody = (ErrorDto)response.getBody();
+        assertThat(responseBody.getErrorId(), is(601));
+        assertThat(responseBody.getMessage(), containsString("The requested amount is to low for this type of loan"));
     }
 
     @Test
     void approveLoanRequest() {
-        var loan = new LoanRequest().setFirstName("Test").setDecision(Decision.OPEN);
+        LoanRequest loan = new LoanRequest().setId(1).setFirstName("Test").setDecision(Decision.OPEN);
         when(loanRequestRepository.findById(1)).thenReturn(Optional.of(loan));
 
         var response = loanRequestService.approveLoanRequest(1);
@@ -71,11 +79,8 @@ class LoanRequestServiceTest {
 
     @Test
     void declineLoanRequest() {
-        var loan = new LoanRequest().setFirstName("Test").setDecision(Decision.OPEN);
+        var loan = new LoanRequest().setId(1).setFirstName("Test").setDecision(Decision.OPEN);
         when(loanRequestRepository.findById(1)).thenReturn(Optional.of(loan));
-        Mockito.doAnswer(returnsFirstArg())
-                .when(loanRequestRepository)
-                .save(any());
 
         var response = loanRequestService.declineLoanRequest(1);
         assertThat(response.isPresent(), is(true));

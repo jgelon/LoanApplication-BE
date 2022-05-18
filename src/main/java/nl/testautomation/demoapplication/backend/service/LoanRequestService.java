@@ -31,7 +31,7 @@ public class LoanRequestService {
         LoanType loanType = loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()).orElseThrow();
 
         if(loanType.getMinAmount() > loanRequestDto.getAmount()) {
-            return ResponseEntity.badRequest().body(new ErrorDto(601, "The requested amount is to low for this type of loan!"));
+            return ResponseEntity.badRequest().body(new ErrorDto(601, "The requested amount is to low for this type of loan! Sorry, Mark ;)"));
         }
 
         LoanRequest loanRequest = loanRequestDto.toLoanRequest();
