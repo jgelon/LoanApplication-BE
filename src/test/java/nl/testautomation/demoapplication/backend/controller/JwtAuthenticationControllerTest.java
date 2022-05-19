@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Set;
 
+import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,7 +51,6 @@ class JwtAuthenticationControllerTest extends ControllerTestBase {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token").value("mytoken"))
                 .andExpect(jsonPath("$.username").value("test"))
-                .andExpect(jsonPath("$.authorities[0]").value("priv"))
-                .andExpect(jsonPath("$.authorities[1]").value("priv2"));
+                .andExpect(jsonPath("$.authorities").value(hasItems("priv", "priv2")));
     }
 }
