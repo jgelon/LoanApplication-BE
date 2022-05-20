@@ -1,6 +1,7 @@
 package nl.testautomation.demoapplication.backend.config;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.testautomation.demoapplication.backend.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,11 @@ import java.io.IOException;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
-    @Autowired
+
     private JwtUserDetailsService jwtUserDetailsService;
-    @Autowired
+
     private JwtTokenUtil jwtTokenUtil;
 
     @Override
