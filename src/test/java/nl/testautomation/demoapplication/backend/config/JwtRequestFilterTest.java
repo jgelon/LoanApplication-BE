@@ -33,7 +33,7 @@ class JwtRequestFilterTest {
 
     @Mock
     private JwtUserDetailsService jwtUserDetailsService;
-    @Spy
+    @Mock
     private JwtTokenUtil jwtTokenUtil;
     @InjectMocks
     private JwtRequestFilter filter;
