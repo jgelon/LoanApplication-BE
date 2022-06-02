@@ -28,8 +28,12 @@ public class LoanRequestService {
     }
 
     public ResponseEntity<Object> addNewRequest(LoanRequestDto loanRequestDto) {
-        LoanType loanType = loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId()).orElseThrow();
+        Optional<LoanType> loanTypeOptional = loanTypeService.getLoanTypeById(loanRequestDto.getLoanTypeId());
 
+        if(!loanTypeOptional.isPresent()) {
+            return ResponseEntity.badRequest().body(new ErrorDto(602, "The provided loantype is not recognized"));
+        }
+        LoanType loanType = loanTypeOptional.get();
         if(loanType.getMinAmount() > loanRequestDto.getAmount()) {
             return ResponseEntity.badRequest().body(new ErrorDto(601, "The requested amount is to low for this type of loan! Sorry, Mark ;)"));
         }

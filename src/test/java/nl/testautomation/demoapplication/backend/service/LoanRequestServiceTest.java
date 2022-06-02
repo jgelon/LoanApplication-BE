@@ -42,6 +42,7 @@ class LoanRequestServiceTest {
     void initUseCase() {
         LoanType basicLoan = new LoanType(1, "Test Type", "Test Type", 500);
         when(loanTypeService.getLoanTypeById(1)).thenReturn(Optional.of(basicLoan));
+        when(loanTypeService.getLoanTypeById(99)).thenReturn(Optional.empty());
         when(loanRequestRepository.save(any(LoanRequest.class))).then(returnsFirstArg());
     }
 
@@ -65,6 +66,18 @@ class LoanRequestServiceTest {
         var responseBody = (ErrorDto)response.getBody();
         assertThat(responseBody.getErrorId(), is(601));
         assertThat(responseBody.getMessage(), containsString("The requested amount is to low for this type of loan"));
+    }
+
+    @Test
+    void addNewRequestInvalidLoantype() {
+        var amount = 200;
+        var request = new LoanRequestDto().setLoanTypeId(99).setAmount(amount);
+
+        var response = loanRequestService.addNewRequest(request);
+        assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+        var responseBody = (ErrorDto)response.getBody();
+        assertThat(responseBody.getErrorId(), is(602));
+        assertThat(responseBody.getMessage(), containsString("The provided loantype is not recognized"));
     }
 
     @Test
