@@ -6,19 +6,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfiguration {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
@@ -37,18 +38,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+    // @Bean
+    // @Override
+    // public AuthenticationManager authenticationManagerBean() throws Exception {
+    //     return super.authenticationManagerBean();
+    // }
 
+     @Bean
+     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+         http
+             .authorizeHttpRequests()
+                 .requestMatchers("/**").hasRole("USER")
+                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                 .and()
+             .formLogin();
+         return http.build();
+     }
+     
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // We don't need CSRF for this example
         httpSecurity.cors().and().csrf().disable()
                 // Only authenticate comments everything else is permitted
-                .authorizeRequests().antMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
+                .authorizeHttpRequests().antMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
                 .anyRequest().permitAll()
                 // make sure we use stateless session; session won't be used to
                 // store user's state.
