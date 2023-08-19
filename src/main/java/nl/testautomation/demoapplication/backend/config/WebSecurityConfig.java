@@ -15,11 +15,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfiguration {
+public class WebSecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
@@ -44,29 +47,20 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     //     return super.authenticationManagerBean();
     // }
 
-     @Bean
-     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-         http
-             .authorizeHttpRequests()
-                 .requestMatchers("/**").hasRole("USER")
-                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                 .and()
-             .formLogin();
-         return http.build();
-     }
-     
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        // We don't need CSRF for this example
-        httpSecurity.cors().and().csrf().disable()
-                // Only authenticate comments everything else is permitted
-                .authorizeHttpRequests().antMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
-                .anyRequest().permitAll()
-                // make sure we use stateless session; session won't be used to
-                // store user's state.
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    @Bean
+  public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity
+        .cors((request) -> request.disable())
+        .csrf((request) -> request.disable())        
+        .exceptionHandling(r -> r.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+        .sessionManagement(r -> r.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(requests -> requests
+            .requestMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
+            .requestMatchers("/openapi/openapi.yml").permitAll()
+            .anyRequest().permitAll()
+        );
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+    return httpSecurity.build();
+  }
 }
