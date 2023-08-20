@@ -41,26 +41,26 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // @Override
-    // public AuthenticationManager authenticationManagerBean() throws Exception {
-    //     return super.authenticationManagerBean();
-    // }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+            throws Exception {
+        return config.getAuthenticationManager();
+            }
 
     @Bean
   public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
         .cors((request) -> request.disable())
-        .csrf((request) -> request.disable())        
+        .csrf(AbstractHttpConfigurer::disable)        
         .exceptionHandling(r -> r.authenticationEntryPoint(jwtAuthenticationEntryPoint))
         .sessionManagement(r -> r.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(requests -> requests
             .requestMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
-            .requestMatchers("/openapi/openapi.yml").permitAll()
             .anyRequest().permitAll()
-        );
+        )
+        .authenticationProvider(authenticationProvider())
         // Add a filter to validate the tokens with every request
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     return httpSecurity.build();
   }
 }
