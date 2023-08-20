@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -51,15 +52,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .cors(s -> s.disable())
-                .csrf(s -> s.disable())
-                .exceptionHandling(r -> r.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .sessionManagement(r -> r.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
                         .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider())
+                .exceptionHandling(r -> r.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .sessionManagement(r -> r.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Add a filter to validate the tokens with every request
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                ;
         return httpSecurity.build();
     }
 }
