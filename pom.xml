@@ -22,6 +22,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <sonar.organization>jgelon</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <version.jjwt>0.11.5</version.jjwt>
+        <version.springdoc>1.7.0</version.springdoc>
     </properties>
 
     <dependencies>
@@ -63,13 +65,13 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.7.0</version>
+            <version>${version.springdoc}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
-            <version>1.7.0</version>
+            <version>${version.springdoc}</version>
         </dependency>
 
         <dependency>
@@ -97,7 +99,21 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.11.5</version>
+            <version>${version.jjwt}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${version.jjwt}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-gson</artifactId>
+            <version>${version.jjwt}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

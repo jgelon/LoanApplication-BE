@@ -37,7 +37,8 @@ class JwtRequestFilterTest {
 
     @BeforeEach
     void setUp() {
-        jwtTokenUtil = new JwtTokenUtil("secret");
+        var secret = "aSaJjB2EElAZJXJnQTL6czyvWqA5cinsX1kR2HYFNndhFzfir67ZPYvBcq6sKkwfzLds3CdlXfdF1w5HqmG38xZQA0NhIeQgJxhmFFRLdo5hacoaut8RQw0l73jLhXV";
+        jwtTokenUtil = new JwtTokenUtil(secret);
         var user = new User()
                 .setId(1L)
                 .setUsername("test")

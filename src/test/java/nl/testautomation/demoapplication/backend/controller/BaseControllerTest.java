@@ -3,7 +3,10 @@ package nl.testautomation.demoapplication.backend.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
+
+import nl.testautomation.demoapplication.backend.config.WebSecurityConfig;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Import({WebSecurityConfig.class})
 @WebMvcTest(BaseController.class)
 class BaseControllerTest extends ControllerTestBase {
 

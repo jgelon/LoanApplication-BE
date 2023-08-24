@@ -1,11 +1,13 @@
 package nl.testautomation.demoapplication.backend.controller;
 
+import nl.testautomation.demoapplication.backend.config.WebSecurityConfig;
 import nl.testautomation.demoapplication.backend.model.LoanReason;
 import nl.testautomation.demoapplication.backend.service.LoanReasonsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Import({WebSecurityConfig.class})
 @WebMvcTest(LoanReasonController.class)
 class LoanReasonControllerTest extends ControllerTestBase {
 
