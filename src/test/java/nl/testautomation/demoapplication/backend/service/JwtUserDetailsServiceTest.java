@@ -1,21 +1,19 @@
 package nl.testautomation.demoapplication.backend.service;
 
-import nl.testautomation.demoapplication.backend.model.User;
-import nl.testautomation.demoapplication.backend.repository.LoanReasonsRepository;
-import nl.testautomation.demoapplication.backend.repository.UserRepository;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import nl.testautomation.demoapplication.backend.model.User;
+import nl.testautomation.demoapplication.backend.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
 class JwtUserDetailsServiceTest {

@@ -8,19 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.Set;
 
@@ -42,7 +37,8 @@ class JwtRequestFilterTest {
 
     @BeforeEach
     void setUp() {
-        jwtTokenUtil = new JwtTokenUtil("secret");
+        var secret = "aSaJjB2EElAZJXJnQTL6czyvWqA5cinsX1kR2HYFNndhFzfir67ZPYvBcq6sKkwfzLds3CdlXfdF1w5HqmG38xZQA0NhIeQgJxhmFFRLdo5hacoaut8RQw0l73jLhXV";
+        jwtTokenUtil = new JwtTokenUtil(secret);
         var user = new User()
                 .setId(1L)
                 .setUsername("test")

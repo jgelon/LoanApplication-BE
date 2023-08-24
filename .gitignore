@@ -13,6 +13,9 @@ frontend/app/**/*.js.map
 frontend/node_modules/
 frontend/bower_components/
 
+# Vscode
+.vscode/
+
 # IDEs and editors
 .idea/
 *.iml

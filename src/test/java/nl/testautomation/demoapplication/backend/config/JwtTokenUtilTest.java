@@ -1,26 +1,19 @@
 package nl.testautomation.demoapplication.backend.config;
 
-import io.jsonwebtoken.MalformedJwtException;
-import nl.testautomation.demoapplication.backend.model.Privilege;
-import nl.testautomation.demoapplication.backend.model.User;
-import nl.testautomation.demoapplication.backend.service.JwtUserDetailsService;
-import org.exparity.hamcrest.date.DateMatchers;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.util.ReflectionTestUtils;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Date;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.exparity.hamcrest.date.DateMatchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.jsonwebtoken.MalformedJwtException;
+import nl.testautomation.demoapplication.backend.model.Privilege;
+import nl.testautomation.demoapplication.backend.model.User;
 
 class JwtTokenUtilTest {
 
@@ -31,7 +24,8 @@ class JwtTokenUtilTest {
 
     @BeforeEach
     void setUp() {
-        jwtTokenUtil = new JwtTokenUtil("secret");
+        var secret = "aSaJjB2EElAZJXJnQTL6czyvWqA5cinsX1kR2HYFNndhFzfir67ZPYvBcq6sKkwfzLds3CdlXfdF1w5HqmG38xZQA0NhIeQgJxhmFFRLdo5hacoaut8RQw0l73jLhXV";
+        jwtTokenUtil = new JwtTokenUtil(secret);
         user = new User()
                 .setId(1L)
                 .setUsername("test")

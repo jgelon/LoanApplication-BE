@@ -8,7 +8,7 @@ import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.enums.IncomeType;
 import nl.testautomation.demoapplication.backend.enums.MaritalStatus;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity

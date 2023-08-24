@@ -1,5 +1,6 @@
 package nl.testautomation.demoapplication.backend.controller;
 
+import nl.testautomation.demoapplication.backend.config.WebSecurityConfig;
 import nl.testautomation.demoapplication.backend.dto.LoanRequestDto;
 import nl.testautomation.demoapplication.backend.enums.Gender;
 import nl.testautomation.demoapplication.backend.model.LoanRequest;
@@ -13,6 +14,7 @@ import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithAnonymousUser;
@@ -34,6 +36,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Import({WebSecurityConfig.class})
 @ContextConfiguration
 @WebMvcTest(LoanRequestsController.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -92,7 +95,7 @@ class LoanRequestsControllerTest extends ControllerTestBase {
     @Test
     @WithAnonymousUser
     void generate() throws Exception {
-        this.mockMvc.perform(get("/loanrequests/generate/")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/loanrequests/generate")).andExpect(status().isOk());
     }
 
     @Test
