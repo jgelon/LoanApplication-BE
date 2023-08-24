@@ -60,6 +60,7 @@ public class SetupData {
         privileges = privilegeRepository.saveAll(privilegesList);
     }
 
+    @java.lang.SuppressWarnings("java:S6437")
     private void initUsers() {
         Set<Privilege> allPriv = new HashSet<>();
         privileges.forEach(allPriv::add);
