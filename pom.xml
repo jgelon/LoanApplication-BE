@@ -23,7 +23,6 @@
         <sonar.organization>jgelon</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <version.jjwt>0.11.5</version.jjwt>
-        <version.springdoc>1.7.0</version.springdoc>
     </properties>
 
     <dependencies>
@@ -62,16 +61,10 @@
             </exclusions>
         </dependency>
 
-        <dependency>
+       <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${version.springdoc}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-security</artifactId>
-            <version>${version.springdoc}</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.2.0</version>
         </dependency>
 
         <dependency>
