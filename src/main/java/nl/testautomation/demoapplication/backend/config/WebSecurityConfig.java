@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import nl.testautomation.demoapplication.backend.service.JwtUserDetailsService;
 
@@ -54,7 +55,10 @@ public class WebSecurityConfig {
                 .cors(s -> s.disable())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/comments/**", "/loanrequests/admin/**").authenticated()
+                        .requestMatchers(
+                            AntPathRequestMatcher.antMatcher("/comments/**"), 
+                            AntPathRequestMatcher.antMatcher("/loanrequests/admin/**")
+                        ).authenticated()
                         .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider())
                 .exceptionHandling(r -> r.authenticationEntryPoint(jwtAuthenticationEntryPoint))
