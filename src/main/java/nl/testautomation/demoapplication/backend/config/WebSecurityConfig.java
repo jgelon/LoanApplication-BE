@@ -1,6 +1,5 @@
 package nl.testautomation.demoapplication.backend.config;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import nl.testautomation.demoapplication.backend.service.JwtUserDetailsService;
 
@@ -29,12 +26,20 @@ import nl.testautomation.demoapplication.backend.service.JwtUserDetailsService;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtRequestFilter jwtRequestFilter;
+    private final JwtUserDetailsService jwtUserDetailsService;
+
     @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-    @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    public WebSecurityConfig(
+        JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+        JwtRequestFilter jwtRequestFilter,
+        JwtUserDetailsService jwtUserDetailsService
+    ) {
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtRequestFilter = jwtRequestFilter;
+        this.jwtUserDetailsService = jwtUserDetailsService;
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

@@ -18,11 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ConfigController {
 
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final PrivilegeRepository privilegeRepository;
+    private final UserRepository userRepository;
 
+    @Autowired
+    public ConfigController(
+        PrivilegeRepository privilegeRepository,
+        UserRepository userRepository
+    )
+    {
+        this.privilegeRepository = privilegeRepository;
+        this.userRepository = userRepository;
+    }
     @GetMapping("/maritalstatus")
     public MaritalStatus[] maritalStatus() {
         return MaritalStatus.values();

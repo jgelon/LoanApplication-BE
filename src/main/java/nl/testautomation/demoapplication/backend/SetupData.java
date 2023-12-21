@@ -21,22 +21,28 @@ import java.util.stream.Collectors;
 
 @Component
 public class SetupData {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private LoanTypeRepository loanTypeRepository;
-
-    @Autowired
-    private LoanReasonsRepository loanReasonsRepository;
+    private final UserRepository userRepository;
+    private final PrivilegeRepository privilegeRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final LoanTypeRepository loanTypeRepository;
+    private final LoanReasonsRepository loanReasonsRepository;
 
     private Iterable<Privilege> privileges;
+
+    @Autowired
+    public SetupData(
+            UserRepository userRepository,
+            PrivilegeRepository privilegeRepository,
+            BCryptPasswordEncoder passwordEncoder,
+            LoanTypeRepository loanTypeRepository,
+            LoanReasonsRepository loanReasonsRepository
+    ) {
+        this.userRepository = userRepository;
+        this.privilegeRepository = privilegeRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.loanTypeRepository = loanTypeRepository;
+        this.loanReasonsRepository = loanReasonsRepository;
+    }
 
     @PostConstruct
     public void init() {

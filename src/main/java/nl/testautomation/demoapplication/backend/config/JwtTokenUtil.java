@@ -1,7 +1,7 @@
 package nl.testautomation.demoapplication.backend.config;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +21,10 @@ import javax.crypto.SecretKey;
 @Component
 public class JwtTokenUtil implements Serializable {
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60L;
+    @Serial
     private static final long serialVersionUID = -2550185165626007488L;
 
-    private String secret;
+    private final String secret;
 
     public JwtTokenUtil(@Value("${jwt.secret}") String secret) {
         this.secret = secret;
@@ -72,8 +73,8 @@ public class JwtTokenUtil implements Serializable {
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+        return Jwts.builder().claims(claims).subject(subject).issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(getSigningKey()).compact();
     }
 
