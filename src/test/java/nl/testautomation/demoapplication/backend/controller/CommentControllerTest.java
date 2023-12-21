@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
@@ -57,8 +57,8 @@ class CommentControllerTest extends ControllerTestBase {
             .setText("Test Text");
         when(commentService.getSingleComment(1)).thenReturn(Optional.of(baseComment));
         when(commentService.getComments(10)).thenReturn(List.of(baseComment));
-        when(commentService.save(any(), any())).thenReturn(baseComment);
-        doNothing().when(commentService).delete(any());
+        when(commentService.save(anyInt(), anyString())).thenReturn(baseComment);
+        doNothing().when(commentService).delete(anyInt());
     }
 
     @Test
@@ -122,7 +122,7 @@ class CommentControllerTest extends ControllerTestBase {
     }
 
     @Test
-    @WithMockUser(authorities = { "COMMENT_DELETE" })
+    @WithAnonymousUser
     void deleteCommentNoAuth() throws Exception {
         this.mockMvc.perform(delete("/comments/comment/1")).andExpect(unauthenticated());
     }
