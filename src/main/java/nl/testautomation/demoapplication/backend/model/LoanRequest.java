@@ -32,7 +32,7 @@ public class LoanRequest {
     private IncomeType incomeType;
     private MaritalStatus maritalStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_id", referencedColumnName = "id")
     private LoanType loanType;
 
