@@ -22,7 +22,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <sonar.organization>jgelon</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <version.jjwt>0.12.3</version.jjwt>
+        <version.jjwt>0.12.5</version.jjwt>
     </properties>
 
     <dependencies>
