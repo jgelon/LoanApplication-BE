@@ -1,7 +1,8 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - LoanApplication-BE
+name: Build LoanApplication-BE
+# name: Build and deploy JAR app to Azure Web App - LoanApplication-BE
 
 on:
   push:
@@ -32,24 +33,24 @@ jobs:
         name: java-app
         path: '${{ github.workspace }}/target/*.jar'
 
-  deploy:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/master'
+  #   needs: build
+  #   environment:
+  #     name: 'production'
+  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v4
-      with:
-        name: java-app
+  #   steps:
+  #   - name: Download artifact from build job
+  #     uses: actions/download-artifact@v4
+  #     with:
+  #       name: java-app
 
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v3
-      with:
-        app-name: 'LoanApplication-BE'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_265facf0d4a84116a9ab730b55fee389 }}
-        package: '*.jar'
+  #   - name: Deploy to Azure Web App
+  #     id: deploy-to-webapp
+  #     uses: azure/webapps-deploy@v3
+  #     with:
+  #       app-name: 'LoanApplication-BE'
+  #       publish-profile: ${{ secrets.AzureAppService_PublishProfile_265facf0d4a84116a9ab730b55fee389 }}
+  #       package: '*.jar'
