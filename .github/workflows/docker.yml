@@ -3,10 +3,7 @@ name: Docker Image CI/CD to Docker Hub
 on:
   push:
     branches:
-      - main # Or your main branch name, e.g., master, develop
-  pull_request:
-    branches:
-      - main # Optional: Run on pull requests to ensure build works
+      - master
 
 jobs:
   build_and_push:
