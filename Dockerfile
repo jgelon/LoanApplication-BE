@@ -1,6 +1,6 @@
 # --- Stage 1: Build the Maven application ---
 # Use a Maven image that includes a JDK, matching your desired Java version
-FROM maven:3.9.6-amazoncorretto-21 AS build
+FROM maven:3.9.11-amazoncorretto-21 AS build
 # This image provides Maven 3.9.6 AND Eclipse Temurin Java 21 JDK.
 # You could also use:
 # FROM maven:3.9.6-amazoncorretto-21 AS build
@@ -24,7 +24,7 @@ RUN mvn clean package -DskipTests
 
 # --- Stage 2: Create the runtime image ---
 # Use a lightweight JRE image for the final, smaller application image
-FROM amazoncorretto:21-alpine
+FROM amazoncorretto:21.0.8-alpine
 # This is still the best choice for the final runtime image due to its small size.
 
 # Set the working directory
