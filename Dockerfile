@@ -24,7 +24,7 @@ RUN mvn clean package -DskipTests
 
 # --- Stage 2: Create the runtime image ---
 # Use a lightweight JRE image for the final, smaller application image
-FROM amazoncorretto:21-alpine
+FROM amazoncorretto:25-alpine
 # This is still the best choice for the final runtime image due to its small size.
 
 # Set the working directory
