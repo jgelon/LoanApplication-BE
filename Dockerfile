@@ -1,6 +1,6 @@
 # --- Stage 1: Build the Maven application ---
 # Use a Maven image that includes a JDK, matching your desired Java version
-FROM maven:3.9.6-amazoncorretto-21 AS build
+FROM maven:3.9.16-amazoncorretto-21 AS build
 # This image provides Maven 3.9.6 AND Eclipse Temurin Java 21 JDK.
 # You could also use:
 # FROM maven:3.9.6-amazoncorretto-21 AS build
